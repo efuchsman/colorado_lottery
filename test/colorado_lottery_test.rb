@@ -62,9 +62,12 @@ RSpec.describe ColoradoLottery do
             benjamin.add_game_interest('Mega Millions')
 
             lottery.interested_and_18?(alexander, pick_4)
+            lottery.interested_and_18?(benjamin, mega_millions)
+            lottery.interested_and_18?(alexander, cash_5)
 
             expect(lottery.interested_and_18?(alexander,pick_4)).to be true
-
+            expect(lottery.interested_and_18?(benjamin, mega_millions)).to be false
+            expect(lottery.interested_and_18?(alexander, cash_5)).to be false
   end
 end
 
