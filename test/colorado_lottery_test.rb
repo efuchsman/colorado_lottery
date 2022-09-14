@@ -11,6 +11,13 @@ RSpec.describe ColoradoLottery do
     expect(lottery).to be_an_instance_of(ColoradoLottery)
   end
 
+  it 'has no contestants or winners yet' do
+    lottery = ColoradoLottery.new
+
+    expect(lottery.registered_contestants).to eq({})
+    expect(lottery.winners).to eq([])
+    expect(lottery.currrrent_contestants).to eq({})
+  end
 
 end
 
