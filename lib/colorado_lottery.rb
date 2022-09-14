@@ -34,6 +34,7 @@ class ColoradoLottery
   end
 
   def register_contestant(contestant, game)
+    require 'pry'; binding.pry
     @contestant = contestant
     @game = game
     contestants = []
