@@ -19,8 +19,19 @@ class ColoradoLottery
     else
       false
     end
-
-
   end
+
+  def can_register?(contestant, game)
+    @game = game
+    @contestant = contestant
+    if interested_and_18?(contestant, game) != true
+      return false
+    end
+    if @game.national_drawing? == false && contestant.state_of_residence != "CO"
+      return false
+    end
+    true
+  end
+
 
 end
