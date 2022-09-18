@@ -1,11 +1,11 @@
 class ColoradoLottery
 
-  attr_reader :registered_contestants, :winners, :currrrent_contestants
+  attr_reader :winners, :current_contestants, :registered_contestants
 
   def initialize
-    @registered_contestants = {}
     @winners = []
-    @currrrent_contestants = {}
+    @current_contestants = {}
+    @registered_contestants = Hash.new
   end
 
 
@@ -34,16 +34,12 @@ class ColoradoLottery
   end
 
   def register_contestant(contestant, game)
-    require 'pry'; binding.pry
-    @contestant = contestant
-    @game = game
-    contestants = []
-    if can_register?(contestant, game) == true
-      contestants << contestant
-      @registered_contestants[game.name] = contestants
+    if can_register?(contestant, game) && @registered_contestants[game.name]
+      @registered_contestants[game.name] << contestant
+    else
+      @registered_contestants[game.name] = [contestant]
     end
     @registered_contestants
   end
-
 
 end
