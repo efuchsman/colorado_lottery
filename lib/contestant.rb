@@ -7,7 +7,7 @@ class Contestant
     @last_name = attributes[:last_name]
     @age =  attributes[:age]
     @state_of_residence = attributes[:state_of_residence]
-    @spending_money = attributes[:pending_money]
+    @spending_money = attributes[:spending_money]
     @full_name = "#{@first_name} #{@last_name}"
     @game_interests = []
   end

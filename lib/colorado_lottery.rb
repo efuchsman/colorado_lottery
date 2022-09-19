@@ -42,4 +42,13 @@ class ColoradoLottery
     @registered_contestants
   end
 
+  def eligible_contestants(game)
+    #  require 'pry'; binding.pry
+    eligible_contestants = []
+    @registered_contestants[game.name].each do |contestant|
+      eligible_contestants << contestant if contestant.spending_money >= game.cost
+    end
+    eligible_contestants
+  end
+
 end
