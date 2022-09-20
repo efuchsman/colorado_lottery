@@ -1,3 +1,5 @@
+require 'date'
+
 class ColoradoLottery
 
   attr_reader :winners, :current_contestants, :registered_contestants
@@ -5,7 +7,7 @@ class ColoradoLottery
   def initialize
     @winners = []
     @current_contestants = {}
-    @registered_contestants = Hash.new
+    @registered_contestants = {}
   end
 
 
@@ -22,8 +24,6 @@ class ColoradoLottery
   end
 
   def can_register?(contestant, game)
-    @game = game
-    @contestant = contestant
     if interested_and_18?(contestant, game) != true
       return false
     end
@@ -34,21 +34,43 @@ class ColoradoLottery
   end
 
   def register_contestant(contestant, game)
-    if can_register?(contestant, game) && @registered_contestants[game.name]
-      @registered_contestants[game.name] << contestant
-    else
-      @registered_contestants[game.name] = [contestant]
+    if can_register?(contestant, game)
+      if @registered_contestants[game.name]
+        @registered_contestants[game.name] << contestant
+      else
+        @registered_contestants[game.name] = [contestant]
+      end
     end
-    @registered_contestants
   end
 
   def eligible_contestants(game)
-    #  require 'pry'; binding.pry
-    eligible_contestants = []
-    @registered_contestants[game.name].each do |contestant|
-      eligible_contestants << contestant if contestant.spending_money >= game.cost
+    eligible = []
+    contestants = @registered_contestants[game.name]
+    contestants.each do |contestant|
+      eligible << contestant if contestant.spending_money >= game.cost
     end
-    eligible_contestants
+    eligible
   end
+
+  def charge_contestants(game)
+    eligible_contestants(game).each do |contestant|
+      contestant.spending_money -= game.cost
+      if @current_contestants[game.name]
+        @current_contestants[game.name] << contestant
+      else
+        @current_contestants[game.name] = [contestant]
+      end
+    end
+  end
+
+  def draw_winners
+    @current_contestants.each_key do |game|
+      random_winner = @current_contestants[game].sample
+      @winners << {random_winner.full_name => game}
+    end
+    p @winners
+    Date.today.to_s
+  end
+
 
 end
