@@ -7,7 +7,7 @@ class ColoradoLottery
   def initialize
     @winners = []
     @current_contestants = {}
-    @registered_contestants = {}
+    @registered_contestants = Hash.new {|h, k| h[k] = [] }
   end
 
 
@@ -34,13 +34,7 @@ class ColoradoLottery
   end
 
   def register_contestant(contestant, game)
-    if can_register?(contestant, game)
-      if @registered_contestants[game.name]
-        @registered_contestants[game.name] << contestant
-      else
-        @registered_contestants[game.name] = [contestant]
-      end
-    end
+  @registered_contestants[game.name] << contestant if can_register?(contestant, game) == true
   end
 
   def eligible_contestants(game)
@@ -63,14 +57,14 @@ class ColoradoLottery
     end
   end
 
-  def draw_winners
-    @current_contestants.each_key do |game|
-      random_winner = @current_contestants[game].sample
-      @winners << {random_winner.full_name => game}
-    end
-    p @winners
-    Date.today.to_s
-  end
+  # def draw_winners
+  #   @current_contestants.each_key do |game|
+  #     random_winner = @current_contestants[game].sample
+  #     @winners << {random_winner.full_name => game_name}
+  #   end
+  #   p @winners
+  #   Date.today.to_s
+  # end
 
 
 end

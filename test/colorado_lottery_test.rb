@@ -209,7 +209,7 @@ RSpec.describe ColoradoLottery do
 
     #  expect(lottery.current_contestants).to eq({"Cash 5" => [winston, grace]})
 
-     expect(lottery.draw_winners).to eq(Date.today.to_s)
+    #  expect(lottery.draw_winners).to eq(Date.today.to_s)
   end
 
 end
